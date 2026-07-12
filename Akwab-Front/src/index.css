@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-120px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeInLeft {
+  animation: fadeInLeft 1s ease-out forwards;
+}
+
+@font-face {
+  font-family: "Google Sans Code";
+  src: url("./assets/fonts/GoogleSansCode-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body {
+  font-family: "Google Sans Code", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Montserrat", sans-serif;
+}
+
+#localisation {
+  font-family: "Montserrat", sans-serif;
+}
+
+#localisation2 {
+  font-family: "Montserrat", sans-serif;
+
+}
+
+#titre-card {
+  font-family: "Montserrat", sans-serif;
+
+}
+
+#donnees {
+  font-family: "Montserrat", sans-serif;
+
+}
+
+#titre {
+  font-family: "Montserrat", sans-serif;
+
+}
