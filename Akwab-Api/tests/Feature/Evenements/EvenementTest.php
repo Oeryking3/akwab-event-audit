@@ -61,7 +61,7 @@ class EvenementTest extends TestCase
 
         $payload = [
             'nom'             => 'Festival Jazz Abidjan',
-            'date'            => now()->addMonth()->format('Y-m-d'),
+            'date'            => now()->addMonth()->format('Y-m-d\TH:i'),
             'description'     => 'Un grand festival.',
             'image'           => $fakeImage,
             'id_categorie'    => $categorie->id_categorie,
@@ -96,7 +96,7 @@ class EvenementTest extends TestCase
             ->postJson('/api/evenements', [
                 'nom' => 'Test',
                 'description' => 'Une description valide de test',
-                'date' => now()->addMonth()->format('Y-m-d'),
+                'date' => now()->addMonth()->format('Y-m-d\TH:i'),
                 'image' => UploadedFile::fake()->image('event.jpg'),
                 'id_categorie' => $categorie->id_categorie,
                 'id_lieu' => $lieu->id_lieu,
@@ -126,7 +126,7 @@ class EvenementTest extends TestCase
         $this->actingAs($admin, 'sanctum')
             ->putJson("/api/evenements/{$evenement->id_evenement}", [
                 'nom'             => 'Nouveau nom',
-                'date'            => now()->addMonth()->format('Y-m-d'),
+                'date'            => now()->addMonth()->format('Y-m-d\TH:i'),
                 'description'     => 'Nouvelle description',
                 'id_categorie'    => $categorie->id_categorie,
                 'id_lieu'         => $lieu->id_lieu,

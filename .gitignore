@@ -19,3 +19,6 @@ Akwab-Api/bootstrap/cache/*.php
 
 # Tests
 coverage
+Akwab-Front/cypress/downloads/
+Akwab-Front/cypress/screenshots/
+Akwab-Front/cypress/videos/
