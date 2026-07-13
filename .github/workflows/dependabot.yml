@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # Backend Laravel (Composer)
+  - package-ecosystem: "composer"
+    directory: "/Akwab-Api"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "backend"
+    commit-message:
+      prefix: "chore(deps-back)"
+
+  # Frontend React (npm)
+  - package-ecosystem: "npm"
+    directory: "/Akwab-Front"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "frontend"
+    commit-message:
+      prefix: "chore(deps-front)"
+
+  # GitHub Actions elles-mêmes (bonne pratique : garder les actions à jour)
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencies"
+      - "ci"
