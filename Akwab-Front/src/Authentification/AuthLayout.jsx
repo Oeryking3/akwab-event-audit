@@ -4,7 +4,7 @@ export default function AuthLayout({ children }) {
       {/* Image gauche — 60% — cachée sur mobile */}
       <div className="hidden md:block md:w-3/5 relative overflow-hidden">
         <img
-          src="../../public/image.png"
+          src="/image.png"
           alt="Akwab Event"
           className="w-full h-full object-cover"
         />
