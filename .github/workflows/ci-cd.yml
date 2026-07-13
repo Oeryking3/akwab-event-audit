@@ -64,6 +64,61 @@ jobs:
         run: php artisan migrate --force
       - name: Run tests
         run: php artisan test
+
+  security-scan:
+    name: Security & Dependency Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Composer audit (backend)
+        working-directory: Akwab-Api
+        run: composer install --no-interaction --prefer-dist --no-scripts --quiet && composer audit --format=table
+        continue-on-error: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: npm audit (frontend)
+        working-directory: Akwab-Front
+        run: npm install --no-audit --quiet && npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Build api image (for scan)
+        run: docker build -f Akwab-Api/dockerfile.prod -t akwab-api-scan:latest ./Akwab-Api
+
+      - name: Build front image (for scan)
+        run: |
+          docker build \
+            -f Akwab-Front/dockerfile.prod \
+            --build-arg VITE_API_URL=https://placeholder-check.local \
+            -t akwab-front-scan:latest ./Akwab-Front
+
+      - name: Trivy scan - backend image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: akwab-api-scan:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 0
+
+      - name: Trivy scan - frontend image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: akwab-front-scan:latest
+          format: table
+          severity: CRITICAL,HIGH
+          exit-code: 0
+
   docker-build-check:
     name: Docker Build Check
     runs-on: ubuntu-latest
@@ -79,6 +134,7 @@ jobs:
             -f Akwab-Front/dockerfile.prod \
             --build-arg VITE_API_URL=https://placeholder-check.local \
             -t akwab-front-check:latest ./Akwab-Front
+
   deploy-railway:
     name: Deploy to Railway
     runs-on: ubuntu-latest
